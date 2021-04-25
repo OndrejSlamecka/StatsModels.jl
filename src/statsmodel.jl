@@ -180,21 +180,11 @@ function StatsBase.coeftable(model::TableModels; kwargs...)
     ct
 end
 
-# show function that delegates to coeftable
+# show function that delegates to model's show
 function Base.show(io::IO, model::TableModels)
-    try
-        ct = coeftable(model)
-        println(io, typeof(model))
-        println(io)
-        println(io, model.mf.f)
-        println(io)
-        println(io,"Coefficients:")
-        show(io, ct)
-    catch e
-        if isa(e, ErrorException) && occursin("coeftable is not defined", e.msg)
-            show(io, model.model)
-        else
-            rethrow(e)
-        end
-    end
+    println(io, typeof(model))
+    println(io)
+    println(io, model.mf.f)
+    println(io)
+    show(io, model.model)
 end
